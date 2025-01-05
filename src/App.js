@@ -76,7 +76,11 @@ function App() {
     };
 
     const handleArticleClick = (article) => {
-        setSelectedArticle(article);
+        // Reset to the most recent article
+        const sortedArticles = [...articles].sort((a, b) => {
+            // existing sorting logic...
+        });
+        setSelectedArticle(sortedArticles[0]);
     };
 
     const handleImageClick = (index) => {
@@ -85,7 +89,15 @@ function App() {
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
-        setSelectedArticle(null);
+        if (tab === 'logs') {
+            // Reset to the most recent article when switching to logs
+            const sortedArticles = [...articles].sort((a, b) => {
+                // existing sorting logic...
+            });
+            setSelectedArticle(sortedArticles[0]);
+        } else {
+            setSelectedArticle(null);
+        }
     };
 
     const formatChineseDate = (dateStr) => {

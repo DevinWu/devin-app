@@ -43,6 +43,8 @@ body {
 
 .main-content {
     display: flex;
+    flex-direction: row;
+    gap: 20px;
     height: calc(100vh - 100px); /* 减去header的高度 */
 }
 
@@ -100,8 +102,9 @@ body {
 
 .logs-content {
     flex: 1;
-    padding: 20px;
     overflow-y: auto;
+    padding: 20px;
+    max-height: 80vh;
 }
 
 .article-content {
