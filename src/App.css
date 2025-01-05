@@ -175,42 +175,57 @@ body {
 }
 
 .images-viewer {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: visible;
+    padding: 0 40px;
+    box-sizing: border-box;
 }
 
-.images-viewer img {
+.images-viewer .main-image {
     max-width: 100%;
-    max-height: calc(100vh - 140px);
+    height: auto;
+    display: block;
     object-fit: contain;
 }
 
 .nav-button {
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    font-size: 3rem; /* 增大按钮字体大小 */
-    cursor: pointer;
-    color: #333;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    transition: background 0.3s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+    z-index: 100;
 }
 
-.nav-button.left {
-    left: 15px;
+.nav-button.prev {
+    left: 0;
 }
 
-.nav-button.right {
-    right: 15px;
+.nav-button.next {
+    right: 0;
 }
 
 .nav-button:hover {
-    background: rgba(255, 255, 255, 1);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.nav-button .arrow {
+    font-size: 24px;
+    color: white;
+    line-height: 1;
+    user-select: none;
 }
 
 /* 响应式设计 */
@@ -295,29 +310,30 @@ body {
 }
 
 .nav-button {
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    font-size: 3rem; /* 增大按钮字体大小 */
+    cursor: pointer;
+    color: #333;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.3);
-    color: white;
-    border: none;
-    padding: 15px;
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.nav-button:hover {
-    background: rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 50%;
+    transition: background 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .nav-button.left {
-    left: 10px;
+    left: 15px;
 }
 
 .nav-button.right {
-    right: 10px;
+    right: 15px;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 1);
 }
 
 /* 文章内容区域滚动 */
@@ -358,5 +374,47 @@ body {
 
     .tab-button {
         padding: 8px 15px;
+    }
+}
+
+.nav-button .arrow {
+    font-size: 40px;
+    color: white;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* 添加移动端特定样式 */
+@media screen and (max-width: 768px) {
+    .nav-button {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .nav-button.prev {
+        left: 8px;
+    }
+    
+    .nav-button.next {
+        right: 8px;
+    }
+    
+    .nav-button .arrow {
+        font-size: 20px;
+    }
+}
+
+/* 移动端样式 */
+@media screen and (max-width: 768px) {
+    .images-viewer {
+        padding: 0 30px;
+    }
+
+    .nav-button {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .nav-button .arrow {
+        font-size: 20px;
     }
 }

@@ -183,9 +183,17 @@ function App() {
                         <div className="images-viewer">
                             {images.length > 0 && (
                                 <>
-                                    <button className="nav-button left" onClick={prevImage}>&#10094;</button>
-                                    <img src={`/img/${images[currentImageIndex]}`} alt={`Image ${currentImageIndex + 1}`} />
-                                    <button className="nav-button right" onClick={nextImage}>&#10095;</button>
+                                    <button className="nav-button prev" onClick={prevImage}>
+                                        <span className="arrow">‹</span>
+                                    </button>
+                                    <img 
+                                        src={`/img/${images[currentImageIndex]}`} 
+                                        alt={`Image ${currentImageIndex + 1}`}
+                                        className="main-image"
+                                    />
+                                    <button className="nav-button next" onClick={nextImage}>
+                                        <span className="arrow">›</span>
+                                    </button>
                                 </>
                             )}
                         </div>
