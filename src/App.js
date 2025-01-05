@@ -106,7 +106,7 @@ function App() {
                         className={`tab-button ${activeTab === 'logs' ? 'active' : ''}`}
                         onClick={() => handleTabClick('logs')}
                     >
-                        日志
+                        文章
                     </button>
                     <button
                         className={`tab-button ${activeTab === 'images' ? 'active' : ''}`}
@@ -120,7 +120,7 @@ function App() {
                 {activeTab === 'logs' && (
                     <section className="logs-section">
                         <div className="logs-list">
-                            <h2>日志列表</h2>
+                            <h2>文章列表</h2>
                             <ul>
                                 {articles.map((article, index) => (
                                     <li
@@ -143,7 +143,7 @@ function App() {
                                 </div>
                             ) : (
                                 <div className="placeholder">
-                                    <p>请选择一篇日志查看详细内容。</p>
+                                    <p>请选择一篇文章查看详细内容。</p>
                                 </div>
                             )}
                         </div>

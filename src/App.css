@@ -253,3 +253,110 @@ body {
         height: 40vh;
     }
 }
+
+/* 响应式布局 */
+@media screen and (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .logs-section, .images-section {
+        flex-direction: column;
+    }
+
+    .logs-list, .images-list {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .logs-content, .images-viewer {
+        width: 100%;
+        height: auto;
+        min-height: calc(100vh - 350px);
+    }
+}
+
+/* 图片查看器样式优化 */
+.images-viewer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.images-viewer img {
+    max-width: 100%;
+    max-height: calc(100vh - 140px);
+    object-fit: contain;
+}
+
+.nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.nav-button.left {
+    left: 10px;
+}
+
+.nav-button.right {
+    right: 10px;
+}
+
+/* 文章内容区域滚动 */
+.logs-content {
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.article-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* 确保在移动设备上内容可以完整显示 */
+@media screen and (max-width: 768px) {
+    .nav-button {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .images-viewer {
+        padding: 0 40px;
+    }
+
+    .article-content {
+        padding: 0 15px;
+    }
+
+    /* 调整header在移动端的显示 */
+    .header h1 {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
+    .tabs {
+        margin-bottom: 10px;
+    }
+
+    .tab-button {
+        padding: 8px 15px;
+    }
+}
