@@ -18,15 +18,25 @@ function App() {
             if (data.length > 0) {
                 // Sort articles by date (assuming dates are in "#### YYYY年MM月DD日" format)
                 const sortedArticles = [...data].sort((a, b) => {
-                    // Convert dates to string if they aren't already
-                    const dateStrA = String(a.date || '');
-                    const dateStrB = String(b.date || '');
-                    
-                    // Skip the "#### " prefix if it exists
-                    const dateA = dateStrA.startsWith('#### ') ? dateStrA.substring(5) : dateStrA;
-                    const dateB = dateStrB.startsWith('#### ') ? dateStrB.substring(5) : dateStrB;
-                    
                     try {
+                        // Handle Date objects
+                        if (a.date instanceof Date && b.date instanceof Date) {
+                            return b.date - a.date;
+                        }
+
+                        // Convert dates to string if they aren't already
+                        const dateStrA = String(a.date || '');
+                        const dateStrB = String(b.date || '');
+                        
+                        // Skip the "#### " prefix if it exists
+                        const dateA = dateStrA.startsWith('#### ') ? dateStrA.substring(5) : dateStrA;
+                        const dateB = dateStrB.startsWith('#### ') ? dateStrB.substring(5) : dateStrB;
+                        
+                        // If the date is already in Date object string format
+                        if (dateA.includes('GMT') || dateB.includes('GMT')) {
+                            return new Date(dateB) - new Date(dateA);
+                        }
+
                         // Convert "YYYY年MM月DD日" to Date object for comparison
                         const [yearA, monthA, dayA] = dateA.match(/(\d+)年(\d+)月(\d+)日/).slice(1);
                         const [yearB, monthB, dayB] = dateB.match(/(\d+)年(\d+)月(\d+)日/).slice(1);
@@ -95,6 +105,11 @@ function App() {
         
         // If it's any other type, convert to string
         return String(dateStr || '');
+    };
+
+    const parseDate = (dateString) => {
+        if (!dateString) return null;
+        return new Date(dateString.slice(0, 19));
     };
 
     return (
