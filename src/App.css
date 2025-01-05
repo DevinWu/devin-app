@@ -1,38 +1,255 @@
-.App {
-  text-align: center;
+/* 全局样式 */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+    background-color: #4A90E2;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.tabs {
+    margin-top: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.tab-button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 0 5px;
+    border-bottom: 3px solid transparent;
 }
 
-.App-link {
-  color: #61dafb;
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.tab-button.active {
+    border-bottom: 3px solid #FFD700;
+}
+
+.main-content {
+    display: flex;
+    height: calc(100vh - 100px); /* 减去header的高度 */
+}
+
+/* 日志部分 */
+.logs-section {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.logs-list {
+    width: 250px;
+    border-right: 1px solid #e0e0e0;
+    overflow-y: auto;
+    background: #f5f5f5;
+}
+
+.logs-list h2 {
+    border-bottom: 2px solid #4A90E2;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.logs-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.logs-list .article-item {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+}
+
+.logs-list .article-item:hover {
+    background-color: #e8e8e8;
+}
+
+.logs-list .article-item.selected {
+    background-color: #e3e3e3;
+}
+
+.logs-list .article-item h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.logs-list .article-item p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+}
+
+.logs-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.article-content {
+    padding: 15px;
+    background-color: #f7f7f7;
+    border-radius: 6px;
+}
+
+.article-content h3 {
+    margin-top: 0;
+    color: #4A90E2;
+}
+
+.article-content p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.placeholder {
+    padding: 20px;
+    color: #666;
+}
+
+/* 图片部分 */
+.images-section {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.images-list {
+    width: 250px;
+    border-right: 1px solid #e0e0e0;
+    overflow-y: auto;
+    background: #f5f5f5;
+}
+
+.images-list h2 {
+    border-bottom: 2px solid #4A90E2;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.images-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.images-list .image-item {
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.images-list .image-item:hover {
+    background-color: #e8e8e8;
+}
+
+.images-list .image-item.selected {
+    background-color: #e3e3e3;
+}
+
+.images-list span {
+    display: block;
+    text-align: center;
+    margin-top: 5px;
+    font-size: 0.9rem;
+    word-break: break-all;
+}
+
+.images-viewer {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.images-viewer img {
+    max-width: 100%;
+    max-height: calc(100vh - 140px);
+    object-fit: contain;
+}
+
+.nav-button {
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    font-size: 3rem; /* 增大按钮字体大小 */
+    cursor: pointer;
+    color: #333;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px;
+    border-radius: 50%;
+    transition: background 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.nav-button.left {
+    left: 15px;
+}
+
+.nav-button.right {
+    right: 15px;
+}
+
+.nav-button:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .logs-section, .images-section {
+        flex-direction: column;
+    }
+
+    .logs-list, .images-list {
+        width: 100%;
+        max-height: none;
+        border-right: none;
+        padding-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .logs-content, .images-viewer {
+        width: 100%;
+        max-height: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 15px;
+    }
+
+    .tab-button {
+        padding: 8px 12px;
+        font-size: 1rem;
+    }
+
+    .nav-button {
+        font-size: 2rem;
+        left: 10px;
+        right: 10px;
+    }
+
+    .images-viewer {
+        height: 40vh;
+    }
 }
