@@ -63,9 +63,20 @@ body {
 }
 
 .logs-list h2 {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #4A90E2;
+    margin: 0 0 15px 0;
+    padding: 0 0 10px 15px;
     border-bottom: 2px solid #4A90E2;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 40px;
+    position: sticky;
+    top: 0;
+    background-color: #f5f5f5;
+    z-index: 10;
 }
 
 .logs-list ul {
@@ -75,28 +86,34 @@ body {
 }
 
 .logs-list .article-item {
-    padding: 8px 12px;
+    padding: 10px 15px;
     border-bottom: 1px solid #e0e0e0;
     cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    border-radius: 4px;
+    margin: 5px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .logs-list .article-item:hover {
     background-color: #e8e8e8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logs-list .article-item.selected {
     background-color: #e3e3e3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .logs-list .article-item h4 {
     margin: 0 0 4px 0;
-    font-size: 14px;
-    font-weight: normal;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 .logs-list .article-item p {
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
     color: #666;
 }
 
@@ -149,9 +166,20 @@ body {
 }
 
 .images-list h2 {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #4A90E2;
+    margin: 0 0 15px 0;
+    padding: 0 0 10px 15px;
     border-bottom: 2px solid #4A90E2;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 40px;
+    position: sticky;
+    top: 0;
+    background-color: #f5f5f5;
+    z-index: 10;
 }
 
 .images-list ul {
@@ -161,18 +189,23 @@ body {
 }
 
 .images-list .image-item {
-    padding: 6px 12px;
+    padding: 8px 15px;
     cursor: pointer;
-    font-size: 13px;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    border-radius: 4px;
+    margin: 5px 0;
 }
 
 .images-list .image-item:hover {
     background-color: #e8e8e8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .images-list .image-item.selected {
     background-color: #e3e3e3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .images-list span {
