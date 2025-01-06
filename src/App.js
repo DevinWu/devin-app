@@ -76,11 +76,7 @@ function App() {
     };
 
     const handleArticleClick = (article) => {
-        // Reset to the most recent article
-        const sortedArticles = [...articles].sort((a, b) => {
-            // existing sorting logic...
-        });
-        setSelectedArticle(sortedArticles[0]);
+        setSelectedArticle(article);
     };
 
     const handleImageClick = (index) => {

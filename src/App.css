@@ -179,19 +179,14 @@ body {
 
 .images-viewer {
     position: relative;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: visible;
-    padding: 0 40px;
-    box-sizing: border-box;
 }
 
-.images-viewer .main-image {
+.images-viewer img {
     max-width: 100%;
-    height: auto;
-    display: block;
+    max-height: calc(100vh - 140px);
     object-fit: contain;
 }
 
@@ -199,7 +194,7 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     border: none;
     cursor: pointer;
     width: 40px;
@@ -213,15 +208,15 @@ body {
 }
 
 .nav-button.prev {
-    left: 0;
+    left: 10px;
 }
 
 .nav-button.next {
-    right: 0;
+    right: 10px;
 }
 
 .nav-button:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
 }
 
 .nav-button .arrow {
@@ -298,58 +293,6 @@ body {
     }
 }
 
-/* 图片查看器样式优化 */
-.images-viewer {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.images-viewer img {
-    max-width: 100%;
-    max-height: calc(100vh - 140px);
-    object-fit: contain;
-}
-
-.nav-button {
-    background: rgba(255, 255, 255, 0.8);
-    border: none;
-    font-size: 3rem; /* 增大按钮字体大小 */
-    cursor: pointer;
-    color: #333;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 10px;
-    border-radius: 50%;
-    transition: background 0.3s;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-.nav-button.left {
-    left: 15px;
-}
-
-.nav-button.right {
-    right: 15px;
-}
-
-.nav-button:hover {
-    background: rgba(255, 255, 255, 1);
-}
-
-/* 文章内容区域滚动 */
-.logs-content {
-    overflow-y: auto;
-    padding: 20px;
-}
-
-.article-content {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
 /* 确保在移动设备上内容可以完整显示 */
 @media screen and (max-width: 768px) {
     .nav-button {
@@ -363,6 +306,7 @@ body {
 
     .article-content {
         padding: 0 15px;
+        margin: 0 10px;
     }
 
     /* 调整header在移动端的显示 */
