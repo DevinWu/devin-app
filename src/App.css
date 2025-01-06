@@ -105,12 +105,18 @@ body {
     overflow-y: auto;
     padding: 20px;
     max-height: 80vh;
+    box-sizing: border-box;
+    padding-right: calc(20px + 15px);
 }
 
 .article-content {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 15px;
     background-color: #f7f7f7;
     border-radius: 6px;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 
 .article-content h3 {
@@ -182,12 +188,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 .images-viewer img {
     max-width: 100%;
     max-height: calc(100vh - 140px);
     object-fit: contain;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .nav-button {
