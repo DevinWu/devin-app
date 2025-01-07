@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { getDiaries } from './api/getDiaries';
 import { marked } from 'marked';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 function App() {
     const [articles, setArticles] = useState([]);
@@ -10,6 +11,7 @@ function App() {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [activeTab, setActiveTab] = useState('logs');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     useEffect(() => {
         // Fetch articles
@@ -64,6 +66,10 @@ function App() {
             .catch(error => console.error('Error loading image list:', error));
     }, []);
 
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
+
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
     };
@@ -78,6 +84,7 @@ function App() {
 
     const handleImageClick = (index) => {
         setCurrentImageIndex(index);
+        setIsSidebarOpen(false);
     };
 
     const handleTabClick = (tab) => {
@@ -135,6 +142,11 @@ function App() {
                         图片
                     </button>
                 </div>
+                {activeTab === 'images' && (
+                    <button className="toggle-sidebar" onClick={toggleSidebar}>
+                        {isSidebarOpen ? <FaTimes /> : <FaBars />}
+                    </button>
+                )}
             </header>
             <div className="main-content">
                 {activeTab === 'logs' && (
@@ -171,7 +183,7 @@ function App() {
                 )}
                 {activeTab === 'images' && (
                     <section className="images-section">
-                        <div className="images-list">
+                        <div className={`images-list ${isSidebarOpen ? 'open' : ''}`}>
                             <h2>图片列表</h2>
                             <ul>
                                 {images.map((image, index) => (
