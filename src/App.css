@@ -289,29 +289,36 @@ body {
     }
 }
 
-@media (max-width: 768px) {
+
+.nav-button .arrow {
+    font-size: 40px;
+    color: white;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* 添加移动端特定样式 */
+@media screen and (max-width: 768px) {
+    /* Header 相关 */
     .header {
         padding: 15px;
     }
+    
+    .header h1 {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
+    /* Tab 相关 */
+    .tabs {
+        margin-bottom: 10px;
+    }
 
     .tab-button {
-        padding: 8px 12px;
+        padding: 8px 15px;
         font-size: 1rem;
     }
 
-    .nav-button {
-        font-size: 2rem;
-        left: 10px;
-        right: 10px;
-    }
-
-    .images-viewer {
-        height: 40vh;
-    }
-}
-
-/* 响应式布局 */
-@media screen and (max-width: 768px) {
+    /* 布局相关 */
     .main-content {
         flex-direction: column;
         height: auto;
@@ -334,50 +341,19 @@ body {
         height: auto;
         min-height: calc(100vh - 350px);
     }
-}
 
-/* 确保在移动设备上内容可以完整显示 */
-@media screen and (max-width: 768px) {
-    .nav-button {
-        padding: 10px;
-        font-size: 16px;
-    }
-
+    /* 图片查看器相关 */
     .images-viewer {
+        height: 40vh;
         padding: 0 40px;
     }
 
-    .article-content {
-        padding: 0 15px;
-        margin: 0 10px;
-    }
-
-    /* 调整header在移动端的显示 */
-    .header h1 {
-        font-size: 20px;
-        margin: 10px 0;
-    }
-
-    .tabs {
-        margin-bottom: 10px;
-    }
-
-    .tab-button {
-        padding: 8px 15px;
-    }
-}
-
-.nav-button .arrow {
-    font-size: 40px;
-    color: white;
-    text-shadow: 0 0 10px rgba(0,0,0,0.5);
-}
-
-/* 添加移动端特定样式 */
-@media screen and (max-width: 768px) {
+    /* 导航按钮相关 */
     .nav-button {
         width: 32px;
         height: 32px;
+        padding: 10px;
+        font-size: 16px;
     }
     
     .nav-button.prev {
@@ -391,20 +367,11 @@ body {
     .nav-button .arrow {
         font-size: 20px;
     }
+
+    /* 文章内容相关 */
+    .article-content {
+        padding: 0 15px;
+        margin: 0 10px;
+    }
 }
 
-/* 移动端样式 */
-@media screen and (max-width: 768px) {
-    .images-viewer {
-        padding: 0 30px;
-    }
-
-    .nav-button {
-        width: 30px;
-        height: 30px;
-    }
-    
-    .nav-button .arrow {
-        font-size: 20px;
-    }
-}

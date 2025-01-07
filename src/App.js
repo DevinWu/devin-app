@@ -103,7 +103,7 @@ function App() {
                 year: 'numeric',
                 month: 'numeric',
                 day: 'numeric'
-            }).replace(/\//g, '年') + '日';
+            }).replace(/\//, '年').replace(/\//, '月') + '日';
         }
         
         // If it's a string starting with ####
