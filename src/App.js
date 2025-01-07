@@ -6,6 +6,7 @@ import { marked } from 'marked';
 function App() {
     const [articles, setArticles] = useState([]);
     const [images, setImages] = useState([]);
+    const [descriptions, setDescriptions] = useState({});
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [activeTab, setActiveTab] = useState('logs');
@@ -51,21 +52,17 @@ function App() {
         });
 
         // Fetch images
-        fetchImages();
+        fetch('/img/imageList.json')
+            .then(response => response.json())
+            .then(data => {
+                // 将对象转换为数组并保存图片名称
+                const imageNames = Object.keys(data);
+                setImages(imageNames);
+                // 保存描述信息
+                setDescriptions(data);
+            })
+            .catch(error => console.error('Error loading image list:', error));
     }, []);
-
-    const fetchImages = async () => {
-        try {
-            const response = await fetch('/img/imageList.json');
-            if (!response.ok) {
-                throw new Error('无法加载 imageList.json');
-            }
-            const imageList = await response.json();
-            setImages(imageList);
-        } catch (error) {
-            console.error('获取图片列表失败:', error);
-        }
-    };
 
     const nextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
@@ -191,17 +188,22 @@ function App() {
                         <div className="images-viewer">
                             {images.length > 0 && (
                                 <>
-                                    <button className="nav-button prev" onClick={prevImage}>
-                                        <span className="arrow">‹</span>
-                                    </button>
-                                    <img 
-                                        src={`/img/${images[currentImageIndex]}`} 
-                                        alt={`Image ${currentImageIndex + 1}`}
-                                        className="main-image"
-                                    />
-                                    <button className="nav-button next" onClick={nextImage}>
-                                        <span className="arrow">›</span>
-                                    </button>
+                                    <div className="image-description">
+                                        {descriptions[images[currentImageIndex]]}
+                                    </div>
+                                    <div className="image-container">
+                                        <button className="nav-button prev" onClick={prevImage}>
+                                            <span className="arrow">‹</span>
+                                        </button>
+                                        <img 
+                                            src={`/img/${images[currentImageIndex]}`} 
+                                            alt={descriptions[images[currentImageIndex]]}
+                                            className="main-image"
+                                        />
+                                        <button className="nav-button next" onClick={nextImage}>
+                                            <span className="arrow">›</span>
+                                        </button>
+                                    </div>
                                 </>
                             )}
                         </div>
