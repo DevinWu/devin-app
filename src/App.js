@@ -10,44 +10,20 @@ function App() {
     const [descriptions, setDescriptions] = useState({});
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [selectedArticle, setSelectedArticle] = useState(null);
-    const [activeTab, setActiveTab] = useState('logs');
+    const [activeTab, setActiveTab] = useState('life');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [lifeContent, setLifeContent] = useState(''); // State for life content
+    const [toc, setToc] = useState([]); // State for table of contents
+    const [isTocOpen, setIsTocOpen] = useState(false); // State for TOC visibility in mobile
 
     useEffect(() => {
         // Fetch articles
         getDiaries().then(data => {
             setArticles(data);
-            // Set the most recent article as selected
             if (data.length > 0) {
-                // Sort articles by date (assuming dates are in "#### YYYY年MM月DD日" format)
                 const sortedArticles = [...data].sort((a, b) => {
-                    try {
-                        // Handle Date objects
-                        if (a.date instanceof Date && b.date instanceof Date) {
-                            return b.date - a.date;
-                        }
-
-                        // Convert dates to string if they aren't already
-                        const dateStrA = String(a.date || '');
-                        const dateStrB = String(b.date || '');
-                        
-                        // Skip the "#### " prefix if it exists
-                        const dateA = dateStrA.startsWith('#### ') ? dateStrA.substring(5) : dateStrA;
-                        const dateB = dateStrB.startsWith('#### ') ? dateStrB.substring(5) : dateStrB;
-                        
-                        // If the date is already in Date object string format
-                        if (dateA.includes('GMT') || dateB.includes('GMT')) {
-                            return new Date(dateB) - new Date(dateA);
-                        }
-
-                        // Convert "YYYY年MM月DD日" to Date object for comparison
-                        const [yearA, monthA, dayA] = dateA.match(/(\d+)年(\d+)月(\d+)日/).slice(1);
-                        const [yearB, monthB, dayB] = dateB.match(/(\d+)年(\d+)月(\d+)日/).slice(1);
-                        return new Date(yearB, monthB - 1, dayB) - new Date(yearA, monthA - 1, dayA);
-                    } catch (error) {
-                        console.error('日期解析错误:', error);
-                        return 0; // 如果解析失败，保持原有顺序
-                    }
+                    // Example sorting logic based on date or title
+                    return new Date(b.date) - new Date(a.date);
                 });
                 setSelectedArticle(sortedArticles[0]);
             }
@@ -57,17 +33,40 @@ function App() {
         fetch('/img/imageList.json')
             .then(response => response.json())
             .then(data => {
-                // 将对象转换为数组并保存图片名称
                 const imageNames = Object.keys(data);
                 setImages(imageNames);
-                // 保存描述信息
                 setDescriptions(data);
             })
             .catch(error => console.error('Error loading image list:', error));
+
+        // Fetch life content
+        fetch('/life/index.md')
+            .then(response => response.text())
+            .then(text => {
+                const renderer = new marked.Renderer();
+                const tocItems = [];
+
+                renderer.heading = function (text, level) {
+                    if (level <= 3) { // Only include up to level 3 headings
+                        const anchor = text.toLowerCase().trim().replace(/[^\w]+/g, '-');
+                        tocItems.push({ text, level, anchor });
+                        return `<h${level} id="${anchor}">${text}</h${level}>`;
+                    }
+                    return `<h${level}>${text}</h${level}>`;
+                };
+
+                setLifeContent(marked(text, { renderer }));
+                setToc(tocItems);
+            })
+            .catch(error => console.error('Error loading life content:', error));
     }, []);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
+    };
+
+    const toggleToc = () => {
+        setIsTocOpen(!isTocOpen);
     };
 
     const nextImage = () => {
@@ -90,9 +89,9 @@ function App() {
     const handleTabClick = (tab) => {
         setActiveTab(tab);
         if (tab === 'logs') {
-            // Reset to the most recent article when switching to logs
             const sortedArticles = [...articles].sort((a, b) => {
-                // existing sorting logic...
+                // Example sorting logic based on date or title
+                return new Date(b.date) - new Date(a.date);
             });
             setSelectedArticle(sortedArticles[0]);
         } else {
@@ -101,7 +100,6 @@ function App() {
     };
 
     const formatChineseDate = (dateStr) => {
-        // If it's a Date object, convert to string
         if (dateStr instanceof Date) {
             return dateStr.toLocaleDateString('zh-CN', {
                 year: 'numeric',
@@ -110,18 +108,32 @@ function App() {
             }).replace(/\//, '年').replace(/\//, '月') + '日';
         }
         
-        // If it's a string starting with ####
         if (typeof dateStr === 'string' && dateStr.startsWith('#### ')) {
             return dateStr.substring(5);
         }
         
-        // If it's any other type, convert to string
         return String(dateStr || '');
     };
 
-    const parseDate = (dateString) => {
-        if (!dateString) return null;
-        return new Date(dateString.slice(0, 19));
+    const scrollToHeading = (anchor) => {
+        console.log(`Anchor: ${anchor}`);
+        const element = document.getElementById(anchor);
+        if (element) {
+            const headerOffset = document.querySelector('.header').offsetHeight; // Get the header height
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY; // Get the element's position relative to the document
+            const offsetPosition = elementPosition - headerOffset - 20; // Adjust for header height and additional space
+
+            // Log the anchor, element text, and offset position
+            console.log(`Element Text: ${element.textContent}`);
+            console.log(`Offset Position: ${offsetPosition}`);
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        } else {
+            console.log(`Element with anchor ${anchor} not found.`);
+        }
     };
 
     return (
@@ -129,6 +141,12 @@ function App() {
             <header className="header">
                 <h1>Devin Wu's Personal Blog</h1>
                 <div className="tabs">
+                    <button
+                        className={`tab-button ${activeTab === 'life' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('life')}
+                    >
+                        人生
+                    </button>
                     <button
                         className={`tab-button ${activeTab === 'logs' ? 'active' : ''}`}
                         onClick={() => handleTabClick('logs')}
@@ -147,8 +165,30 @@ function App() {
                         {isSidebarOpen ? <FaTimes /> : <FaBars />}
                     </button>
                 )}
+                {activeTab === 'life' && (
+                    <button className="toggle-toc-icon" onClick={toggleToc}>
+                        {isTocOpen ? <FaTimes /> : <FaBars />}
+                    </button>
+                )}
             </header>
             <div className="main-content">
+                {activeTab === 'life' && (
+                    <section className="life-section">
+                        <div className={`life-sidebar ${isTocOpen ? 'open' : ''}`}>
+                            <h2>目录</h2>
+                            <ul>
+                                {toc.map((item, index) => (
+                                    <li key={index} style={{ marginLeft: `${(item.level - 1) * 20}px` }}>
+                                        <a href={`#${item.anchor}`} onClick={(e) => { e.preventDefault(); scrollToHeading(item.anchor); setIsTocOpen(false); }}>
+                                            {item.text}
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className="life-content" onClick={() => setIsTocOpen(false)} dangerouslySetInnerHTML={{ __html: lifeContent }} />
+                    </section>
+                )}
                 {activeTab === 'logs' && (
                     <section className="logs-section">
                         <div className="logs-list">

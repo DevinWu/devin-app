@@ -433,3 +433,147 @@ body {
     color: #FFD700;
 }
 
+.life-section {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    position: relative;
+    margin-top: 20px;
+}
+
+.toggle-toc {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 110;
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.toggle-toc:hover {
+    background-color: #357ABD;
+}
+
+.life-sidebar {
+    width: auto;
+    max-width: 150px;
+    background-color: #f5f5f5;
+    border-right: 1px solid #e0e0e0;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+    position: absolute;
+    top: 60px;
+    left: 0;
+    height: calc(100% - 60px);
+    z-index: 100;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
+.life-sidebar.open {
+    transform: translateX(0);
+}
+
+.life-sidebar h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4A90E2;
+    margin-bottom: 15px;
+}
+
+.life-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f7f7f7;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    max-width: 800px;
+    margin: 0 auto;
+    scroll-behavior: smooth;
+}
+
+.life-content img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+}
+
+.life-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.life-sidebar li {
+    margin-bottom: 10px;
+}
+
+.life-sidebar a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+    display: inline-block;
+}
+
+.life-sidebar a:hover {
+    color: #4A90E2;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+@media screen and (max-width: 768px) {
+    .toggle-toc {
+        display: block;
+    }
+
+    .life-section {
+        flex-direction: column;
+    }
+
+    .life-sidebar {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 80%;
+        max-width: 150px;
+        height: calc(100% - 60px);
+        z-index: 200;
+        transform: translateX(-100%);
+    }
+
+    .life-sidebar.open {
+        transform: translateX(0);
+    }
+}
+
+.toggle-toc-icon {
+    position: absolute;
+    bottom: 10px; /* Position at the bottom of the header */
+    left: 10px; /* Align to the left side */
+    z-index: 110;
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 24px;
+    transition: color 0.3s;
+}
+
+.toggle-toc-icon:hover {
+    color: #FFD700;
+}
+
