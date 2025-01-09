@@ -12,9 +12,9 @@ function App() {
     const [selectedArticle, setSelectedArticle] = useState(null);
     const [activeTab, setActiveTab] = useState('life');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [lifeContent, setLifeContent] = useState(''); // State for life content
-    const [toc, setToc] = useState([]); // State for table of contents
-    const [isTocOpen, setIsTocOpen] = useState(false); // State for TOC visibility in mobile
+    const [lifeContent, setLifeContent] = useState('');
+    const [toc, setToc] = useState([]);
+    const [isTocOpen, setIsTocOpen] = useState(false);
 
     useEffect(() => {
         // Fetch articles
@@ -22,7 +22,6 @@ function App() {
             setArticles(data);
             if (data.length > 0) {
                 const sortedArticles = [...data].sort((a, b) => {
-                    // Example sorting logic based on date or title
                     return new Date(b.date) - new Date(a.date);
                 });
                 setSelectedArticle(sortedArticles[0]);
@@ -47,7 +46,7 @@ function App() {
                 const tocItems = [];
 
                 renderer.heading = function (text, level) {
-                    if (level <= 3) { // Only include up to level 3 headings
+                    if (level <= 3) {
                         const anchor = text.toLowerCase().trim().replace(/[^\w]+/g, '-');
                         tocItems.push({ text, level, anchor });
                         return `<h${level} id="${anchor}">${text}</h${level}>`;
@@ -90,7 +89,6 @@ function App() {
         setActiveTab(tab);
         if (tab === 'logs') {
             const sortedArticles = [...articles].sort((a, b) => {
-                // Example sorting logic based on date or title
                 return new Date(b.date) - new Date(a.date);
             });
             setSelectedArticle(sortedArticles[0]);
@@ -119,11 +117,10 @@ function App() {
         console.log(`Anchor: ${anchor}`);
         const element = document.getElementById(anchor);
         if (element) {
-            const headerOffset = document.querySelector('.header').offsetHeight; // Get the header height
-            const elementPosition = element.getBoundingClientRect().top + window.scrollY; // Get the element's position relative to the document
-            const offsetPosition = elementPosition - headerOffset - 20; // Adjust for header height and additional space
+            const headerOffset = document.querySelector('.header').offsetHeight;
+            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+            const offsetPosition = elementPosition - headerOffset - 20;
 
-            // Log the anchor, element text, and offset position
             console.log(`Element Text: ${element.textContent}`);
             console.log(`Offset Position: ${offsetPosition}`);
 
