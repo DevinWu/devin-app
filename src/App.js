@@ -13,8 +13,6 @@ function App() {
     const [activeTab, setActiveTab] = useState('life');
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [lifeContent, setLifeContent] = useState('');
-    const [toc, setToc] = useState([]);
-    const [isTocOpen, setIsTocOpen] = useState(false);
 
     useEffect(() => {
         // Fetch articles
@@ -42,30 +40,13 @@ function App() {
         fetch('/life/index.md')
             .then(response => response.text())
             .then(text => {
-                const renderer = new marked.Renderer();
-                const tocItems = [];
-
-                renderer.heading = function (text, level) {
-                    if (level <= 3) {
-                        const anchor = text.toLowerCase().trim().replace(/[^\w]+/g, '-');
-                        tocItems.push({ text, level, anchor });
-                        return `<h${level} id="${anchor}">${text}</h${level}>`;
-                    }
-                    return `<h${level}>${text}</h${level}>`;
-                };
-
-                setLifeContent(marked(text, { renderer }));
-                setToc(tocItems);
+                setLifeContent(marked(text));
             })
             .catch(error => console.error('Error loading life content:', error));
     }, []);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
-    };
-
-    const toggleToc = () => {
-        setIsTocOpen(!isTocOpen);
     };
 
     const nextImage = () => {
@@ -113,26 +94,6 @@ function App() {
         return String(dateStr || '');
     };
 
-    const scrollToHeading = (anchor) => {
-        console.log(`Anchor: ${anchor}`);
-        const element = document.getElementById(anchor);
-        if (element) {
-            const headerOffset = document.querySelector('.header').offsetHeight;
-            const elementPosition = element.getBoundingClientRect().top + window.scrollY;
-            const offsetPosition = elementPosition - headerOffset - 20;
-
-            console.log(`Element Text: ${element.textContent}`);
-            console.log(`Offset Position: ${offsetPosition}`);
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-        } else {
-            console.log(`Element with anchor ${anchor} not found.`);
-        }
-    };
-
     return (
         <div className="App">
             <header className="header">
@@ -162,28 +123,11 @@ function App() {
                         {isSidebarOpen ? <FaTimes /> : <FaBars />}
                     </button>
                 )}
-                {activeTab === 'life' && (
-                    <button className="toggle-toc-icon" onClick={toggleToc}>
-                        {isTocOpen ? <FaTimes /> : <FaBars />}
-                    </button>
-                )}
             </header>
             <div className="main-content">
                 {activeTab === 'life' && (
                     <section className="life-section">
-                        <div className={`life-sidebar ${isTocOpen ? 'open' : ''}`}>
-                            <h2>目录</h2>
-                            <ul>
-                                {toc.map((item, index) => (
-                                    <li key={index} style={{ marginLeft: `${(item.level - 1) * 20}px` }}>
-                                        <a href={`#${item.anchor}`} onClick={(e) => { e.preventDefault(); scrollToHeading(item.anchor); setIsTocOpen(false); }}>
-                                            {item.text}
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className="life-content" onClick={() => setIsTocOpen(false)} dangerouslySetInnerHTML={{ __html: lifeContent }} />
+                        <div className="life-content" dangerouslySetInnerHTML={{ __html: lifeContent }} />
                     </section>
                 )}
                 {activeTab === 'logs' && (
