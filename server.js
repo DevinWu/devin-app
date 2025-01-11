@@ -10,17 +10,20 @@ const edgeConfigRouter = require('./src/api/edgeConfig');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// 基本的webpack配置
+// 更新 webpack 配置
 const webpackConfig = {
   mode: 'development',
   entry: [
-    'webpack-hot-middleware/client',
-    './src/index.js'  // React应用的入口文件
+    'webpack-hot-middleware/client?reload=true', // 添加 reload=true
+    './src/index.js'
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
     publicPath: '/'
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'] // 添加文件扩展名解析
   },
   module: {
     rules: [
@@ -37,17 +40,22 @@ const webpackConfig = {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource'
       }
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
   ]
 };
 
 const compiler = webpack(webpackConfig);
 
-// 添加静态文件服务
+// 静态文件服务
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 处理环境变量
@@ -59,12 +67,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// 使用webpack中间件
+// Webpack 中间件配置
 app.use(webpackDevMiddleware(compiler, {
-  publicPath: webpackConfig.output.publicPath
+  publicPath: webpackConfig.output.publicPath,
+  stats: 'minimal',
+  writeToDisk: true // 添加这个选项
 }));
 
-// 启用热更新
 app.use(webpackHotMiddleware(compiler));
 
 // Add this middleware to log incoming requests
@@ -77,7 +86,7 @@ app.use('/api', edgeConfigRouter);
 
 // 处理所有路由，返回index.html
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(port, () => {
