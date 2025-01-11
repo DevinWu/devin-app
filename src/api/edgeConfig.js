@@ -1,0 +1,22 @@
+import express from 'express';
+import { createClient } from '@vercel/edge-config';
+
+const router = express.Router();
+console.log('EDGE_CONFIG:', process.env.REACT_APP_EDGE_CONFIG);
+console.log('REDIS_KV_REST_API_READ_ONLY_TOKEN:', process.env.REACT_APP_REDIS_KV_REST_API_READ_ONLY_TOKEN);
+
+const edgeConfigClient = createClient(process.env.REACT_APP_EDGE_CONFIG);
+console.log('edgeConfigClient:', edgeConfigClient);
+
+router.get('/config/:key', async (req, res) => {
+  try {
+    const { key } = req.params;
+    const value = await edgeConfigClient.get(key);
+    res.json({ value });
+  } catch (error) {
+    console.error('Error fetching edge config:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+export default router; 
