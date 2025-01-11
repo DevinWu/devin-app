@@ -118,6 +118,12 @@ function App() {
                     >
                         图片
                     </button>
+                    <button
+                        className={`tab-button ${activeTab === 'message-board' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('message-board')}
+                    >
+                        留言
+                    </button>
                 </div>
                 {activeTab === 'images' && (
                     <button className="toggle-sidebar" onClick={toggleSidebar}>
@@ -203,8 +209,12 @@ function App() {
                         </div>
                     </section>
                 )}
+                {activeTab === 'message-board' && (
+                    <section id="message-board">
+                        <MessageBoard />
+                    </section>
+                )}
             </div>
-            <MessageBoard />
         </div>
     );
 }

@@ -18,8 +18,11 @@ const MessageBoard = () => {
   useEffect(() => {
     const fetchConfig = async () => {
       try {
+        console.log('try to fetch config');
         const greetingValue = await edgeConfigClient.get('greeting');
+        console.log('greetingValue:', greetingValue);
         const dashboardValue = await edgeConfigClient.get('dashboard');
+        console.log('dashboardValue:', dashboardValue);
         setGreeting(greetingValue);
         setDashboard(dashboardValue);
       } catch (error) {
@@ -32,7 +35,6 @@ const MessageBoard = () => {
 
   return (
     <div>
-      <h2>留言板</h2>
       <div style={{ marginBottom: '20px' }}>
         <h3>Greeting</h3>
         <p style={{ maxHeight: '4em', overflow: 'hidden' }}>{greeting}</p>
