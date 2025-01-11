@@ -7,6 +7,7 @@
     "cra-template": "1.2.0",
     "dotenv": "^16.4.7",
     "gray-matter": "^4.0.3",
+    "http-proxy-middleware": "^3.0.3",
     "marked": "^4.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -18,7 +19,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "debug": "react-scripts --inspect start"
   },
   "eslintConfig": {
     "extends": [
@@ -40,6 +42,5 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
-  },
-  "proxy": "https://edge-config.vercel.com"
+  }
 }
