@@ -10,11 +10,11 @@ console.log('edgeConfigClient:', edgeConfigClient);
 
 router.get('/config/:key', async (req, res) => {
   try {
-    console.log('req:', req);
+    console.error('req:', req);
     const { key } = req.params;
-    console.log('key to fetch:', key);
+    console.error('key to fetch:', key);
     const value = await edgeConfigClient.get(key);
-    console.log('value:', value);
+    console.error('value:', value);
     res.json({ value });
   } catch (error) {
     console.error('Error fetching edge config:', error);
