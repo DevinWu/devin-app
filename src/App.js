@@ -3,6 +3,7 @@ import './App.css';
 import { getDiaries } from './api/getDiaries';
 import { marked } from 'marked';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import MessageBoard from './components/MessageBoard';
 
 function App() {
     const [articles, setArticles] = useState([]);
@@ -203,6 +204,7 @@ function App() {
                     </section>
                 )}
             </div>
+            <MessageBoard />
         </div>
     );
 }
