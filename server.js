@@ -7,6 +7,7 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const edgeConfigRouter = require('./src/api/edgeConfig');
 
+
 const app = express();
 const port = process.env.PORT || 3000;
 

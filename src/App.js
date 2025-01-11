@@ -3,6 +3,7 @@ import './App.css';
 import { getDiaries } from './api/getDiaries';
 import { marked } from 'marked';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import MessageBoard from './components/MessageBoard';
 
 function App() {
