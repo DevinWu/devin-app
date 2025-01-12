@@ -1,12 +1,15 @@
-require('dotenv').config({ path: '.env.development.local' }); // Load environment variables
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config({ path: '.env.development.local' }); // Load environment variables in development
+} else {
+    require('dotenv').config({ path: '.env.production.local' });
+}
 
 const express = require('express');
 const path = require('path');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const edgeConfigRouter = require('./src/api/edgeConfig');
-
+const edgeConfigRouter = require('./api/config/edgeConfig');
 
 const app = express();
 const port = process.env.PORT || 3000;
