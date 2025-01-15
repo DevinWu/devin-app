@@ -124,6 +124,12 @@ function App() {
                     >
                         留言
                     </button>
+                    <button
+                        className={`tab-button ${activeTab === 'music-lab' ? 'active' : ''}`}
+                        onClick={() => handleTabClick('music-lab')}
+                    >
+                        音乐实验室
+                    </button>
                 </div>
                 {activeTab === 'images' && (
                     <button className="toggle-sidebar" onClick={toggleSidebar}>
@@ -212,6 +218,16 @@ function App() {
                 {activeTab === 'message-board' && (
                     <section id="message-board">
                         <MessageBoard />
+                    </section>
+                )}
+                {activeTab === 'music-lab' && (
+                    <section className="music-lab-section">
+                        <div>
+                            <h2>音乐实验室</h2>
+                            <a href="https://devinwu.github.io/music-lab/" target="_blank" rel="noopener noreferrer">
+                                访问音乐实验室
+                            </a>
+                        </div>
                     </section>
                 )}
             </div>
